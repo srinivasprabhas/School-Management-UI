@@ -82,7 +82,7 @@ export default function SchoolSettingsPage() {
               <FieldSeparator />
 
               <FieldSet>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <Field>
                     <FieldLabel htmlFor="code">School code</FieldLabel>
                     <Input id="code" required value={values.code} onChange={(e) => set_("code", e.target.value)} />

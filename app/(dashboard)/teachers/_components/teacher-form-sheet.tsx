@@ -401,7 +401,7 @@ export function TeacherFormSheet({ open, onOpenChange, teacher, onSubmit }: Teac
                 <FieldLabel htmlFor="addressLine1">Address</FieldLabel>
                 <Input id="addressLine1" value={values.addressLine1} onChange={(e) => set("addressLine1", e.target.value)} />
               </Field>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <Field>
                   <FieldLabel htmlFor="city">City</FieldLabel>
                   <Input id="city" value={values.city} onChange={(e) => set("city", e.target.value)} />

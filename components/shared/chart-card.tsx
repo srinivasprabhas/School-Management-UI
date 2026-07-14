@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Card,
   CardContent,
@@ -7,6 +9,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { ChartContainer, type ChartConfig } from "@/components/ui/chart"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useInView } from "@/hooks/use-in-view"
 import { cn } from "@/lib/utils"
 
 interface ChartCardProps {
@@ -28,6 +32,8 @@ export function ChartCard({
   actions,
   className,
 }: ChartCardProps) {
+  const { ref, inView } = useInView<HTMLDivElement>()
+
   return (
     <Card className={cn("flex flex-col", className)}>
       <CardHeader className={actions ? "flex-row items-start justify-between" : undefined}>
@@ -38,9 +44,15 @@ export function ChartCard({
         {actions}
       </CardHeader>
       <CardContent className="flex-1">
-        <ChartContainer config={config} className="aspect-auto h-64 w-full">
-          {children}
-        </ChartContainer>
+        <div ref={ref} className="aspect-auto h-64 w-full">
+          {inView ? (
+            <ChartContainer config={config} className="aspect-auto h-64 w-full">
+              {children}
+            </ChartContainer>
+          ) : (
+            <Skeleton className="h-64 w-full" />
+          )}
+        </div>
       </CardContent>
       {footer ? (
         <CardFooter className="flex-col items-start gap-1 border-t pt-(--card-spacing) text-sm">

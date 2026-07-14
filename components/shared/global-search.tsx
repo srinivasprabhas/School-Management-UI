@@ -104,12 +104,13 @@ export function GlobalSearch() {
     <>
       <Button
         variant="outline"
-        className="h-8 w-full max-w-sm justify-start gap-2 text-muted-foreground sm:pr-12"
+        size="icon-sm"
+        aria-label="Search"
+        className="justify-center gap-2 text-muted-foreground sm:h-8 sm:w-full sm:max-w-sm sm:justify-start sm:px-3 sm:pr-12"
         onClick={() => setOpen(true)}
       >
         <SearchIcon className="size-4" />
         <span className="hidden sm:inline">Search students, teachers, classes…</span>
-        <span className="sm:hidden">Search…</span>
         <kbd className="pointer-events-none ml-auto hidden select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground sm:inline-flex">
           Ctrl K
         </kbd>
