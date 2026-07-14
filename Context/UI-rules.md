@@ -60,3 +60,4 @@ Shadcn skilled added
 -
 
 - npm i geist
+- npx shadcn@latest add sidebar-08
