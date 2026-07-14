@@ -16,6 +16,7 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, 
 import { DataTable } from "@/components/shared/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/shared/data-table/data-table-column-header"
 import { EmptyState } from "@/components/shared/empty-state"
+import { HorizontalScroller } from "@/components/shared/horizontal-scroller"
 import { StatusBadge } from "@/components/shared/status-badge"
 import { useCurrentUser } from "@/lib/rbac/current-user-context"
 import { ROLE_LABELS } from "@/lib/rbac/types"
@@ -122,12 +123,14 @@ export default function ProfilePage() {
       </Card>
 
       <Tabs defaultValue="overview">
-        <TabsList className="flex-wrap">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="security">Security</TabsTrigger>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
-          <TabsTrigger value="activity">Activity Log</TabsTrigger>
-        </TabsList>
+        <HorizontalScroller>
+          <TabsList className="w-max">
+            <TabsTrigger value="overview" className="shrink-0">Overview</TabsTrigger>
+            <TabsTrigger value="security" className="shrink-0">Security</TabsTrigger>
+            <TabsTrigger value="notifications" className="shrink-0">Notifications</TabsTrigger>
+            <TabsTrigger value="activity" className="shrink-0">Activity Log</TabsTrigger>
+          </TabsList>
+        </HorizontalScroller>
 
         <TabsContent value="overview" className="mt-4">
           <Card>

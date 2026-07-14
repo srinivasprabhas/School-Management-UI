@@ -30,6 +30,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ConfirmDialog } from "@/components/shared/confirm-dialog"
 import { EmptyState } from "@/components/shared/empty-state"
+import { HorizontalScroller } from "@/components/shared/horizontal-scroller"
 import { StatusBadge, toneBgClass, toneForStatus } from "@/components/shared/status-badge"
 import { DataTable } from "@/components/shared/data-table/data-table"
 import { DataTableColumnHeader } from "@/components/shared/data-table/data-table-column-header"
@@ -242,15 +243,17 @@ export function StudentProfile({ studentId }: { studentId: string }) {
       </Card>
 
       <Tabs defaultValue="overview">
-        <TabsList className="flex-wrap">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="parent">Parent & Guardian</TabsTrigger>
-          <TabsTrigger value="medical">Medical Info</TabsTrigger>
-          <TabsTrigger value="attendance">Attendance</TabsTrigger>
-          <TabsTrigger value="fees">Fee History</TabsTrigger>
-          <TabsTrigger value="reports">Report Cards</TabsTrigger>
-          <TabsTrigger value="documents">Documents</TabsTrigger>
-        </TabsList>
+        <HorizontalScroller>
+          <TabsList className="w-max">
+            <TabsTrigger value="overview" className="shrink-0">Overview</TabsTrigger>
+            <TabsTrigger value="parent" className="shrink-0">Parent & Guardian</TabsTrigger>
+            <TabsTrigger value="medical" className="shrink-0">Medical Info</TabsTrigger>
+            <TabsTrigger value="attendance" className="shrink-0">Attendance</TabsTrigger>
+            <TabsTrigger value="fees" className="shrink-0">Fee History</TabsTrigger>
+            <TabsTrigger value="reports" className="shrink-0">Report Cards</TabsTrigger>
+            <TabsTrigger value="documents" className="shrink-0">Documents</TabsTrigger>
+          </TabsList>
+        </HorizontalScroller>
 
         <TabsContent value="overview" className="mt-4">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

@@ -26,6 +26,7 @@ import { PageHeader } from "@/components/shared/page-header"
 import { StatCard } from "@/components/shared/stat-card"
 import { ChartCard } from "@/components/shared/chart-card"
 import { ConfirmDialog } from "@/components/shared/confirm-dialog"
+import { HorizontalScroller } from "@/components/shared/horizontal-scroller"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -320,12 +321,14 @@ export function FeesDashboard() {
       </div>
 
       <Tabs defaultValue="overview">
-        <TabsList className="flex-wrap">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="transactions">Transactions</TabsTrigger>
-          <TabsTrigger value="structure">Fee Structure</TabsTrigger>
-          <TabsTrigger value="fines">Fines</TabsTrigger>
-        </TabsList>
+        <HorizontalScroller>
+          <TabsList className="w-max">
+            <TabsTrigger value="overview" className="shrink-0">Overview</TabsTrigger>
+            <TabsTrigger value="transactions" className="shrink-0">Transactions</TabsTrigger>
+            <TabsTrigger value="structure" className="shrink-0">Fee Structure</TabsTrigger>
+            <TabsTrigger value="fines" className="shrink-0">Fines</TabsTrigger>
+          </TabsList>
+        </HorizontalScroller>
 
         <TabsContent value="overview" className="mt-4">
           <OverviewTab

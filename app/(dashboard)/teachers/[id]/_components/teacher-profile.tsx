@@ -51,6 +51,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { ConfirmDialog } from "@/components/shared/confirm-dialog"
 import { EmptyState } from "@/components/shared/empty-state"
+import { HorizontalScroller } from "@/components/shared/horizontal-scroller"
 import { StatusBadge, toneBgClass, toneForStatus } from "@/components/shared/status-badge"
 import { DataTable } from "@/components/shared/data-table/data-table"
 import { createActionsColumn, type RowAction } from "@/components/shared/data-table/columns-helpers"
@@ -324,15 +325,17 @@ export function TeacherProfile({ teacherId }: { teacherId: string }) {
       </Card>
 
       <Tabs defaultValue="overview">
-        <TabsList className="flex-wrap">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="classes">Classes & Subjects</TabsTrigger>
-          <TabsTrigger value="timetable">Timetable</TabsTrigger>
-          <TabsTrigger value="attendance">Attendance</TabsTrigger>
-          <TabsTrigger value="leave">Leave History</TabsTrigger>
-          <TabsTrigger value="salary">Salary</TabsTrigger>
-          <TabsTrigger value="documents">Documents</TabsTrigger>
-        </TabsList>
+        <HorizontalScroller>
+          <TabsList className="w-max">
+            <TabsTrigger value="overview" className="shrink-0">Overview</TabsTrigger>
+            <TabsTrigger value="classes" className="shrink-0">Classes & Subjects</TabsTrigger>
+            <TabsTrigger value="timetable" className="shrink-0">Timetable</TabsTrigger>
+            <TabsTrigger value="attendance" className="shrink-0">Attendance</TabsTrigger>
+            <TabsTrigger value="leave" className="shrink-0">Leave History</TabsTrigger>
+            <TabsTrigger value="salary" className="shrink-0">Salary</TabsTrigger>
+            <TabsTrigger value="documents" className="shrink-0">Documents</TabsTrigger>
+          </TabsList>
+        </HorizontalScroller>
 
         <TabsContent value="overview" className="mt-4">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

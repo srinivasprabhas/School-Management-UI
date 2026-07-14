@@ -4,6 +4,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { DownloadIcon, FileSpreadsheetIcon, FileTextIcon, RotateCcwIcon } from "lucide-react"
 
+import { HorizontalScroller } from "@/components/shared/horizontal-scroller"
 import { PageHeader } from "@/components/shared/page-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -96,13 +97,15 @@ export function ReportsView() {
       <PageHeader title="Reports" description="Generate and export school reports across every module." />
 
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as CategoryId)}>
-        <TabsList className="h-auto! flex-wrap justify-start gap-1">
-          {CATEGORIES.map((cat) => (
-            <TabsTrigger key={cat.id} value={cat.id}>
-              {cat.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+        <HorizontalScroller>
+          <TabsList className="w-max">
+            {CATEGORIES.map((cat) => (
+              <TabsTrigger key={cat.id} value={cat.id} className="shrink-0">
+                {cat.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </HorizontalScroller>
 
         <div className="flex flex-col gap-4 pt-4">
           <ReportFilterBar filters={filters} onChange={patchFilters} onGenerate={handleGenerate} />

@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from "@/components/ui/item"
 import { EmptyState } from "@/components/shared/empty-state"
+import { HorizontalScroller } from "@/components/shared/horizontal-scroller"
 import { PageHeader } from "@/components/shared/page-header"
 import { useNotifications } from "@/lib/data/store/entities"
 import { NOTIFICATION_META } from "@/lib/data/notification-meta"
@@ -121,13 +122,15 @@ export default function NotificationsPage() {
       />
 
       <Tabs value={tab} onValueChange={(v) => changeTab(String(v))}>
-        <TabsList className="flex-wrap">
-          {TABS.map((t) => (
-            <TabsTrigger key={t.value} value={t.value}>
-              {t.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+        <HorizontalScroller>
+          <TabsList className="w-max">
+            {TABS.map((t) => (
+              <TabsTrigger key={t.value} value={t.value} className="shrink-0">
+                {t.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </HorizontalScroller>
 
         <TabsContent value={tab} className="mt-4 flex flex-col gap-6">
           {pageItems.length === 0 ? (
