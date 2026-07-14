@@ -96,7 +96,7 @@ export function ReportsView() {
       <PageHeader title="Reports" description="Generate and export school reports across every module." />
 
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as CategoryId)}>
-        <TabsList className="h-auto flex-wrap">
+        <TabsList className="h-auto! flex-wrap justify-start gap-1">
           {CATEGORIES.map((cat) => (
             <TabsTrigger key={cat.id} value={cat.id}>
               {cat.label}

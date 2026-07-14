@@ -44,8 +44,8 @@ export function NotificationBell() {
           <span className="absolute top-1 right-1 flex size-2 rounded-full bg-destructive" />
         ) : null}
       </PopoverTrigger>
-      <PopoverContent align="end" className="w-96 p-0">
-        <PopoverHeader className="flex-row items-center justify-between gap-2 px-4 pt-4">
+      <PopoverContent align="end" className="w-[calc(100vw-2rem)] max-w-80 p-0 sm:w-96 sm:max-w-none">
+        <PopoverHeader className="flex-row items-center justify-between gap-2 px-3 pt-3 sm:px-4 sm:pt-4">
           <PopoverTitle>Notifications</PopoverTitle>
           {unread.length > 0 ? (
             <Button
@@ -58,7 +58,7 @@ export function NotificationBell() {
             </Button>
           ) : null}
         </PopoverHeader>
-        <ScrollArea className="h-80 px-2 pb-2">
+        <ScrollArea className="h-64 px-2 pb-2 sm:h-80">
           {latest.length === 0 ? (
             <Empty className="p-6">
               <EmptyMedia variant="icon">
