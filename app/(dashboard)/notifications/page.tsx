@@ -11,6 +11,7 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, 
 import { EmptyState } from "@/components/shared/empty-state"
 import { HorizontalScroller } from "@/components/shared/horizontal-scroller"
 import { PageHeader } from "@/components/shared/page-header"
+import { toneBgClass } from "@/components/shared/status-badge"
 import { useNotifications } from "@/lib/data/store/entities"
 import { NOTIFICATION_META } from "@/lib/data/notification-meta"
 import { SEED_TODAY } from "@/lib/data/seed/generate"
@@ -149,7 +150,7 @@ export default function NotificationsPage() {
                     const Icon = meta.icon
                     return (
                       <Item key={n.id} variant={n.read ? "default" : "muted"}>
-                        <ItemMedia variant="icon">
+                        <ItemMedia variant="icon" className={toneBgClass(meta.tone)}>
                           <Icon />
                         </ItemMedia>
                         <ItemContent>

@@ -10,7 +10,9 @@ import {
 } from "lucide-react"
 
 import { PageHeader } from "@/components/shared/page-header"
+import { toneBgClass, type StatusTone } from "@/components/shared/status-badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: "Campus Operations — MyCampus360",
@@ -22,6 +24,7 @@ interface OperationLink {
   description: string
   href: string
   icon: LucideIcon
+  tone: StatusTone
 }
 
 const OPERATION_LINKS: OperationLink[] = [
@@ -31,6 +34,7 @@ const OPERATION_LINKS: OperationLink[] = [
     description: "Manage the vehicle fleet, drivers, and bus routes.",
     href: "/campus-operations/transport",
     icon: BusIcon,
+    tone: "info",
   },
   {
     id: "library",
@@ -38,6 +42,7 @@ const OPERATION_LINKS: OperationLink[] = [
     description: "Track the book catalog, circulation, and fines.",
     href: "/campus-operations/library",
     icon: LibraryIcon,
+    tone: "warning",
   },
   {
     id: "admissions",
@@ -45,6 +50,7 @@ const OPERATION_LINKS: OperationLink[] = [
     description: "Run the enquiry-to-enrollment admissions pipeline.",
     href: "/campus-operations/admissions",
     icon: UserPlusIcon,
+    tone: "success",
   },
   {
     id: "events",
@@ -52,6 +58,7 @@ const OPERATION_LINKS: OperationLink[] = [
     description: "Plan and track school events and celebrations.",
     href: "/campus-operations/events",
     icon: PartyPopperIcon,
+    tone: "info",
   },
   {
     id: "announcements",
@@ -59,6 +66,7 @@ const OPERATION_LINKS: OperationLink[] = [
     description: "Publish notices, circulars, and newsletters.",
     href: "/campus-operations/announcements",
     icon: MegaphoneIcon,
+    tone: "destructive",
   },
 ]
 
@@ -74,7 +82,7 @@ export default function CampusOperationsPage() {
           <Link key={link.id} href={link.href}>
             <Card className="h-full transition-colors hover:bg-muted/40">
               <CardHeader>
-                <div className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <div className={cn("flex size-9 items-center justify-center rounded-lg", toneBgClass(link.tone))}>
                   <link.icon className="size-4" />
                 </div>
                 <CardTitle className="mt-2">{link.title}</CardTitle>

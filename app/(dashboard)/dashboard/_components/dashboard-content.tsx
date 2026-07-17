@@ -27,6 +27,7 @@ import {
 
 import { StatCard } from "@/components/shared/stat-card"
 import { ChartCard } from "@/components/shared/chart-card"
+import { toneBgClass, type StatusTone } from "@/components/shared/status-badge"
 import { ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -46,6 +47,7 @@ import {
 import { QUICK_ACTIONS } from "@/lib/nav/quick-actions"
 import { SEED_TODAY, gradeFor } from "@/lib/data/seed/generate"
 import { toISODate } from "@/lib/data/seed/random"
+import { cn } from "@/lib/utils"
 
 const studentGrowthConfig: ChartConfig = {
   students: { label: "Students", color: "var(--chart-1)" },
@@ -251,12 +253,22 @@ export function DashboardContent() {
       .slice(0, 8)
   }, [students, feeTransactions, leaveRequests, announcements])
 
-  const ACTIVITY_META: Record<ActivityEntry["type"], { icon: typeof UserPlusIcon }> = {
-    admission: { icon: UserPlusIcon },
-    fee: { icon: WalletIcon },
-    attendance: { icon: CalendarCheckIcon },
-    leave: { icon: CalendarClockIcon },
-    announcement: { icon: MegaphoneIcon },
+  const QUICK_ACTION_TONE: Record<string, string> = {
+    "add-student": "text-success",
+    "add-teacher": "text-primary",
+    "take-attendance": "text-info",
+    "collect-fee": "text-success",
+    "create-notice": "text-destructive",
+    "schedule-exam": "text-warning",
+    "generate-report": "text-info",
+  }
+
+  const ACTIVITY_META: Record<ActivityEntry["type"], { icon: typeof UserPlusIcon; tone: StatusTone }> = {
+    admission: { icon: UserPlusIcon, tone: "success" },
+    fee: { icon: WalletIcon, tone: "info" },
+    attendance: { icon: CalendarCheckIcon, tone: "warning" },
+    leave: { icon: CalendarClockIcon, tone: "neutral" },
+    announcement: { icon: MegaphoneIcon, tone: "destructive" },
   }
 
   return (
@@ -396,7 +408,7 @@ export function DashboardContent() {
                 render={<Link href={action.href} />}
                 nativeButton={false}
               >
-                <action.icon className="size-4" />
+                <action.icon className={cn("size-4", QUICK_ACTION_TONE[action.id])} />
                 <span className="text-xs font-medium">{action.label}</span>
               </Button>
             ))}
@@ -414,10 +426,11 @@ export function DashboardContent() {
           ) : (
             <ItemGroup>
               {recentActivity.map((entry) => {
-                const Icon = ACTIVITY_META[entry.type].icon
+                const meta = ACTIVITY_META[entry.type]
+                const Icon = meta.icon
                 return (
                   <Item key={entry.id} size="sm">
-                    <ItemMedia variant="icon">
+                    <ItemMedia variant="icon" className={toneBgClass(meta.tone)}>
                       <Icon />
                     </ItemMedia>
                     <ItemContent>

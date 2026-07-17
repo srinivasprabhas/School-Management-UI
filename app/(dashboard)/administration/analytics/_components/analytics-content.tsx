@@ -301,7 +301,7 @@ export function AnalyticsContent() {
         </Select>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
         <StatCard
           title="Enrollment Growth"
           value={`${enrollment.growthPct >= 0 ? "+" : ""}${enrollment.growthPct}%`}

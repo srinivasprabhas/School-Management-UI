@@ -32,3 +32,17 @@ export function initials(name: string): string {
     .join("")
     .toUpperCase()
 }
+
+const AVATAR_TONES = [
+  "bg-primary/15 text-primary",
+  "bg-success/15 text-success",
+  "bg-warning/15 text-warning",
+  "bg-info/15 text-info",
+  "bg-destructive/15 text-destructive",
+]
+
+export function avatarTone(seed: string): string {
+  let hash = 0
+  for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) | 0
+  return AVATAR_TONES[Math.abs(hash) % AVATAR_TONES.length]
+}

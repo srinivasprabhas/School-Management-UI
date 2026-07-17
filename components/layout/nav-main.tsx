@@ -22,6 +22,30 @@ import { useNavBadges } from "@/hooks/use-nav-badges"
 import { usePermission } from "@/hooks/use-permission"
 import type { NavItem } from "@/lib/nav/types"
 
+const NAV_ICON_TONE: Record<string, string> = {
+  dashboard: "text-primary",
+  notifications: "text-warning",
+  calendar: "text-info",
+  students: "text-success",
+  teachers: "text-primary",
+  attendance: "text-info",
+  examinations: "text-warning",
+  academics: "text-primary",
+  "campus-operations": "text-success",
+  transport: "text-info",
+  library: "text-warning",
+  admissions: "text-success",
+  events: "text-primary",
+  announcements: "text-destructive",
+  fees: "text-success",
+  reports: "text-info",
+  administration: "text-primary",
+  hrms: "text-warning",
+  analytics: "text-info",
+  "users-roles": "text-primary",
+  "audit-logs": "text-destructive",
+}
+
 interface NavCollapsibleItemProps {
   item: NavItem
   subItems: NavItem[]
@@ -47,7 +71,7 @@ function NavCollapsibleItem({
   return (
     <Collapsible open={open} onOpenChange={setOpen} render={<SidebarMenuItem />}>
       <SidebarMenuButton isActive={isActive} tooltip={item.label} render={<Link href={item.href} />}>
-        <item.icon />
+        <item.icon className={NAV_ICON_TONE[item.id]} />
         <span>{item.label}</span>
       </SidebarMenuButton>
       {badge !== undefined ? <SidebarMenuBadge>{badge}</SidebarMenuBadge> : null}
@@ -102,7 +126,7 @@ export function NavMain({ groups }: { groups: import("@/lib/nav/types").NavGroup
                         tooltip={item.label}
                         render={<Link href={item.href} />}
                       >
-                        <item.icon />
+                        <item.icon className={NAV_ICON_TONE[item.id]} />
                         <span>{item.label}</span>
                       </SidebarMenuButton>
                       {badge !== undefined ? <SidebarMenuBadge>{badge}</SidebarMenuBadge> : null}

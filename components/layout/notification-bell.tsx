@@ -22,6 +22,7 @@ import {
   ItemTitle,
 } from "@/components/ui/item"
 import { Empty, EmptyDescription, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
+import { toneBgClass } from "@/components/shared/status-badge"
 import { NOTIFICATION_META } from "@/lib/data/notification-meta"
 import { useNotifications } from "@/lib/data/store/entities"
 
@@ -74,7 +75,7 @@ export function NotificationBell() {
                 const Icon = meta.icon
                 return (
                   <Item key={n.id} size="sm" variant={n.read ? "default" : "muted"}>
-                    <ItemMedia variant="icon">
+                    <ItemMedia variant="icon" className={toneBgClass(meta.tone)}>
                       <Icon />
                     </ItemMedia>
                     <ItemContent>
