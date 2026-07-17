@@ -50,7 +50,8 @@ import { toISODate } from "@/lib/data/seed/random"
 import { cn } from "@/lib/utils"
 
 const studentGrowthConfig: ChartConfig = {
-  students: { label: "Students", color: "var(--chart-1)" },
+  students: { label: "This Year", color: "var(--chart-1)" },
+  lastYear: { label: "Last Year", color: "var(--chart-4)" },
 }
 const attendanceTrendConfig: ChartConfig = {
   rate: { label: "Attendance %", color: "var(--chart-2)" },
@@ -102,12 +103,14 @@ export function DashboardContent() {
   const activeVehicles = vehicles.filter((v) => v.status === "active")
 
   const studentGrowth = useMemo(() => {
-    const points: { month: string; students: number }[] = []
+    const points: { month: string; students: number; lastYear: number }[] = []
     for (let i = 11; i >= 0; i--) {
       const monthDate = new Date(SEED_TODAY.getFullYear(), SEED_TODAY.getMonth() - i, 1)
       const monthEnd = new Date(SEED_TODAY.getFullYear(), SEED_TODAY.getMonth() - i + 1, 0)
+      const priorMonthEnd = new Date(SEED_TODAY.getFullYear() - 1, SEED_TODAY.getMonth() - i + 1, 0)
       const count = students.filter((s) => new Date(s.admissionDate) <= monthEnd).length
-      points.push({ month: monthLabel(monthDate), students: count })
+      const priorCount = students.filter((s) => new Date(s.admissionDate) <= priorMonthEnd).length
+      points.push({ month: monthLabel(monthDate), students: count, lastYear: priorCount })
     }
     return points
   }, [students])
@@ -314,7 +317,7 @@ export function DashboardContent() {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <ChartCard
           title="Student Growth"
-          description="Cumulative enrollment over the last 12 months"
+          description="Cumulative enrollment — this year vs. last year"
           config={studentGrowthConfig}
         >
           <AreaChart data={studentGrowth} margin={{ left: 0, right: 12 }}>
@@ -323,28 +326,43 @@ export function DashboardContent() {
             <YAxis tickLine={false} axisLine={false} tickMargin={8} width={32} />
             <ChartTooltip content={<ChartTooltipContent />} />
             <Area
+              dataKey="lastYear"
+              type="monotone"
+              fill="var(--color-lastYear)"
+              fillOpacity={0.12}
+              stroke="var(--color-lastYear)"
+              strokeDasharray="4 4"
+            />
+            <Area
               dataKey="students"
               type="monotone"
               fill="var(--color-students)"
-              fillOpacity={0.2}
+              fillOpacity={0.25}
               stroke="var(--color-students)"
+              strokeWidth={2}
             />
           </AreaChart>
         </ChartCard>
 
-        <ChartCard
-          title="Attendance Trends"
-          description="Daily attendance percentage (last 14 school days)"
-          config={attendanceTrendConfig}
-        >
-          <LineChart data={attendanceTrend} margin={{ left: 0, right: 12 }}>
-            <CartesianGrid vertical={false} />
-            <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
-            <YAxis tickLine={false} axisLine={false} tickMargin={8} width={32} domain={[0, 100]} />
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <Line dataKey="rate" type="monotone" stroke="var(--color-rate)" strokeWidth={2} dot={false} />
-          </LineChart>
-        </ChartCard>
+        <Card className="flex h-full flex-col">
+          <CardHeader>
+            <CardTitle>Quick Actions</CardTitle>
+          </CardHeader>
+          <CardContent className="grid flex-1 grid-cols-2 content-start gap-2">
+            {QUICK_ACTIONS.map((action) => (
+              <Button
+                key={action.id}
+                variant="outline"
+                className="h-auto flex-col items-start gap-1 whitespace-normal p-3 text-left"
+                render={<Link href={action.href} />}
+                nativeButton={false}
+              >
+                <action.icon className={cn("size-4", QUICK_ACTION_TONE[action.id])} />
+                <span className="text-xs font-medium">{action.label}</span>
+              </Button>
+            ))}
+          </CardContent>
+        </Card>
 
         <ChartCard
           title="Fee Collection"
@@ -395,25 +413,19 @@ export function DashboardContent() {
           </BarChart>
         </ChartCard>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-          </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-2">
-            {QUICK_ACTIONS.map((action) => (
-              <Button
-                key={action.id}
-                variant="outline"
-                className="h-auto flex-col items-start gap-1 whitespace-normal p-3 text-left"
-                render={<Link href={action.href} />}
-                nativeButton={false}
-              >
-                <action.icon className={cn("size-4", QUICK_ACTION_TONE[action.id])} />
-                <span className="text-xs font-medium">{action.label}</span>
-              </Button>
-            ))}
-          </CardContent>
-        </Card>
+        <ChartCard
+          title="Attendance Trends"
+          description="Daily attendance percentage (last 14 school days)"
+          config={attendanceTrendConfig}
+        >
+          <LineChart data={attendanceTrend} margin={{ left: 0, right: 12 }}>
+            <CartesianGrid vertical={false} />
+            <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
+            <YAxis tickLine={false} axisLine={false} tickMargin={8} width={32} domain={[0, 100]} />
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <Line dataKey="rate" type="monotone" stroke="var(--color-rate)" strokeWidth={2} dot={false} />
+          </LineChart>
+        </ChartCard>
       </div>
 
       <Card>
