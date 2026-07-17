@@ -314,11 +314,12 @@ export function DashboardContent() {
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">
         <ChartCard
           title="Student Growth"
           description="Cumulative enrollment — this year vs. last year"
           config={studentGrowthConfig}
+          className="lg:col-span-3"
         >
           <AreaChart data={studentGrowth} margin={{ left: 0, right: 12 }}>
             <CartesianGrid vertical={false} />
@@ -344,7 +345,7 @@ export function DashboardContent() {
           </AreaChart>
         </ChartCard>
 
-        <Card className="flex h-full flex-col">
+        <Card className="flex h-full flex-col lg:col-span-2">
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
           </CardHeader>
@@ -363,7 +364,9 @@ export function DashboardContent() {
             ))}
           </CardContent>
         </Card>
+      </div>
 
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <ChartCard
           title="Fee Collection"
           description="Collected vs. pending, last 6 months"
@@ -394,12 +397,12 @@ export function DashboardContent() {
         </ChartCard>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">
         <ChartCard
           title="Exam Performance"
           description="Latest published exam — grade distribution by class"
           config={examPerformanceConfig}
-          className="lg:col-span-2"
+          className="lg:col-span-3"
         >
           <BarChart data={examPerformance} layout="vertical" margin={{ left: 12, right: 12 }}>
             <CartesianGrid horizontal={false} />
@@ -417,6 +420,7 @@ export function DashboardContent() {
           title="Attendance Trends"
           description="Daily attendance percentage (last 14 school days)"
           config={attendanceTrendConfig}
+          className="lg:col-span-2"
         >
           <LineChart data={attendanceTrend} margin={{ left: 0, right: 12 }}>
             <CartesianGrid vertical={false} />
