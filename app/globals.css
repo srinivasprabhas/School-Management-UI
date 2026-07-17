@@ -87,6 +87,9 @@
   --sidebar-accent-foreground: oklch(0.97 0.02 260);
   --sidebar-border: oklch(1 0 0 / 8%);
   --sidebar-ring: oklch(0.65 0.2 260);
+  /* Fixed — not redeclared in .dark — so scrollbars always render dark, in both themes. */
+  --scrollbar-thumb: oklch(0.4 0 0 / 50%);
+  --scrollbar-thumb-hover: oklch(0.4 0 0 / 75%);
 }
 
 .dark {
@@ -130,9 +133,10 @@
   * {
     @apply border-border outline-ring/50;
     scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
   }
-  /* Neat, thin, arrow-free scrollbar applied to every scrollable element site-wide (WebKit). */
+  /* Neat, thin, arrow-free scrollbar applied to every scrollable element site-wide (WebKit).
+     Uses the fixed --scrollbar-thumb tokens so it always looks dark, regardless of theme. */
   *::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -141,11 +145,11 @@
     background: transparent;
   }
   *::-webkit-scrollbar-thumb {
-    background-color: var(--border);
+    background-color: var(--scrollbar-thumb);
     border-radius: 9999px;
   }
   *::-webkit-scrollbar-thumb:hover {
-    background-color: var(--muted-foreground);
+    background-color: var(--scrollbar-thumb-hover);
   }
   *::-webkit-scrollbar-button {
     display: none;
