@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/shared/page-header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { VehiclesPanel } from "./vehicles-panel"
 import { RoutesPanel } from "./routes-panel"
+import { LiveTrackingPanel } from "./live-tracking-panel"
 
 export function TransportContent() {
   const [tab, setTab] = useState("vehicles")
@@ -21,12 +22,16 @@ export function TransportContent() {
         <TabsList>
           <TabsTrigger value="vehicles">Vehicles</TabsTrigger>
           <TabsTrigger value="routes">Routes</TabsTrigger>
+          <TabsTrigger value="live-tracking">Live Tracking</TabsTrigger>
         </TabsList>
         <TabsContent value="vehicles" className="mt-4">
           <VehiclesPanel />
         </TabsContent>
         <TabsContent value="routes" className="mt-4">
           <RoutesPanel />
+        </TabsContent>
+        <TabsContent value="live-tracking" className="mt-4">
+          <LiveTrackingPanel />
         </TabsContent>
       </Tabs>
     </div>

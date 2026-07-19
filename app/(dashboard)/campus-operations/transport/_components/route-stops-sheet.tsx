@@ -1,6 +1,7 @@
 "use client"
 
-import { MapPinIcon, UsersIcon } from "lucide-react"
+import { useMemo } from "react"
+import { UsersIcon } from "lucide-react"
 
 import {
   Sheet,
@@ -10,7 +11,10 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
+import { useBusSimulation } from "@/hooks/use-bus-simulation"
+import { useVehicles } from "@/lib/data/store/entities"
 import type { TransportRoute } from "@/lib/data/types"
+import { RouteMap } from "./route-map"
 
 interface RouteStopsSheetProps {
   open: boolean
@@ -19,7 +23,21 @@ interface RouteStopsSheetProps {
 }
 
 export function RouteStopsSheet({ open, onOpenChange, route }: RouteStopsSheetProps) {
+  const { items: vehicles } = useVehicles()
   const stops = route ? [...route.stops].sort((a, b) => a.sequence - b.sequence) : []
+
+  const routeVehicle = useMemo(
+    () => vehicles.find((v) => v.id === route?.vehicleId),
+    [vehicles, route]
+  )
+  const mapRoutes = useMemo(() => (route ? [route] : []), [route])
+  const mapVehicles = useMemo(() => (routeVehicle ? [routeVehicle] : []), [routeVehicle])
+  const positions = useBusSimulation({
+    routes: mapRoutes,
+    vehicles: mapVehicles,
+    playing: open,
+    speed: 1,
+  })
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -31,13 +49,8 @@ export function RouteStopsSheet({ open, onOpenChange, route }: RouteStopsSheetPr
           </SheetDescription>
         </SheetHeader>
         <div className="flex flex-col gap-4 px-4 pb-4">
-          <div className="flex flex-col gap-2 rounded-lg border bg-muted/40 p-8 text-center text-sm text-muted-foreground">
-            <MapPinIcon className="mx-auto size-6" />
-            <p className="font-medium text-foreground">Live GPS tracking not available</p>
-            <p>
-              This is a mock demo — route maps and real-time vehicle location aren&apos;t wired up
-              here. In production this panel would show a live map of the bus along its stops.
-            </p>
+          <div className="overflow-hidden rounded-lg border">
+            <RouteMap routes={mapRoutes} vehicles={mapVehicles} positions={positions} showStopLabels />
           </div>
 
           <div className="flex flex-col gap-2">
